@@ -1,0 +1,71 @@
+body {
+    background-color: #5356FF;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    font-family: "Karla", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.landingPageContainer {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.landingPageContainer.show {
+    opacity: 1;
+}
+
+.kavoon-font {
+    color: #DFF5FF;
+    font-family: "Kavoon", serif;
+    font-weight: 400;
+    font-style: normal;
+    user-select: none;
+}
+
+.header {
+    text-align: center;
+    font-size: 40px;
+}
+
+.landingPageContent {
+    height: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textSection {
+    width: 770px;
+}
+
+.landingPageImage {
+    width: 750px;
+    border-radius: 50%;
+}
+.landingPageText {
+    font-size: 30px;
+    margin-bottom: 40px; 
+}
+
+.button {
+    width: 130px;
+    border-radius: 10px;
+    padding: 1px 0px 1px 0px;
+    margin-bottom: 30px; 
+
+    color: #DFF5FF;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sampleDataLink {
+   font-size: 18px;
+   color: #DFF5FF;
+
+   cursor: pointer;
+   user-select: none;
+}
