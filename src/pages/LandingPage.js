@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
+
+import LandingPageImage from "../assets/landingPageImage.jpg"
+import FileSettings from "../components/FileSettings"
+
 import "../styles.css"
-import { Link } from "react-router-dom";
-import LandingPageImage from "../landingPageImage.jpg"
-import Button from "../components/Button"
 
 const LandingPage = () => {
-
+    const navigate = useNavigate()
     const [contentLoaded, setContentLoaded] = useState(false)
 
+    //Timer function which waits 0.4s so that fonts from Google and the landing page image has loaded
     useEffect(() => {
 
         const timer = setTimeout(() => {
-            setContentLoaded(true);
-        }, 400);
+            setContentLoaded(true)
+        }, 400)
 
-        return () => clearTimeout(timer);
-    }, []);
+        return () => clearTimeout(timer)
+    }, [])
 
     return (
-        <div className={contentLoaded ? 'landingPageContainer show' : 'landingPageContainer'}>
+        <div className={contentLoaded ? 'pageContainer show' : 'pageContainer'}>
             <h1 className="header kavoon-font">CSV Editor</h1>
 
             <div className="landingPageContent">
                 <div className="textSection">
                     <h2 className="landingPageText kavoon-font">Effortlessly edit CSV files by adding or removing data, while also visualizing your data with various chart options.
                     </h2>
-                    <Button
-                        color="#14A44D"
-                        text="Start Editing"
-                    />
-                    <Link className="sampleDataLink" to="MainPage">Try with sample data</Link>
+
+                <FileSettings />
                 </div>
                 <img
                     className="landingPageImage"
                     src={LandingPageImage}
+                    alt="Landing page image"
                 />
             </div>
         </div>
