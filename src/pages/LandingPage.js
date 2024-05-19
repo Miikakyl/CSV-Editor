@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 
 import LandingPageImage from "../assets/landingPageImage.jpg"
-import FileSettings from "../components/FileSettings"
+import DataInputs from "../components/DataInputs"
 
 import "../styles.css"
 
@@ -30,7 +30,7 @@ const LandingPage = () => {
                     <h2 className="landingPageText kavoon-font">Effortlessly edit CSV files by adding or removing data, while also visualizing your data with various chart options.
                     </h2>
 
-                <FileSettings />
+                <DataInputs />
                 </div>
                 <img
                     className="landingPageImage"

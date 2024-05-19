@@ -75,6 +75,7 @@ body {
 
 .fileSettingsInputContainer {
     display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     color: #DFF5FF;
@@ -89,17 +90,20 @@ body {
     border: 1px solid #DFF5FF;
 }
 
-.helperButton {
-    width: 40px;
-    opacity: 0.8;
-    cursor: pointer;
+.fileName {
+    position: absolute;
+    text-align: center;
+    right: 0;
+    background-color: #5356FF;
+    width: 170px;
 }
 
-.helperButton:hover {
-    opacity: 1;
-}
 
+input[type="file"] {
+    visibility: hidden;
+}
 input[type="file"]::file-selector-button {
+    visibility: visible;
     color:#DFF5FF;
     border-radius: 10px;
     padding: 1px 0px 1px 0px;
