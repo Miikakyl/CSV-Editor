@@ -12,7 +12,7 @@ A react project where users can import/export csv files, modify them by deleting
   - Filtering tools
   - exporting files
 
-## Long-rung features
+## Long run features
   - Back-end that allows user creation and saving files in the app (Stack: Express and SQLite)
 
   
