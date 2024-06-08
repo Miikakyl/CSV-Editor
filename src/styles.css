@@ -30,7 +30,7 @@ body {
     font-size: 40px;
 }
 
-.landingPageContent {
+.pageContent {
     height: 750px;
     display: flex;
     justify-content: center;
@@ -45,16 +45,36 @@ body {
     width: 750px;
     border-radius: 50%;
 }
+
 .landingPageText {
     font-size: 30px;
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
 }
+
+.appliedStepsContainer {
+    width: 250px;
+    height: 450px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #DFF5FF;
+    margin-left: 15px;
+    border-radius: 10px;
+    padding: 15px;
+}
+.dataTableContainer {
+    width: 1000px;
+    height: 450px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #DFF5FF;
+}
+
 
 .button {
     width: 130px;
     border-radius: 10px;
     padding: 1px 0px 1px 0px;
-    margin-top: 20px; 
+    margin-top: 20px;
 
     color: #DFF5FF;
     text-align: center;
@@ -62,26 +82,23 @@ body {
     user-select: none;
 }
 
-/*FileSettings.js*/
-
 .fileSettingsContainer {
-    width: 400px;
-    height: 250px;
+    width: 410px;
+
 }
 
 .fileSettingsInputHeader {
-    padding-right: 10px;
+    color: #DFF5FF;
+    width: 80px;
 }
 
 .fileSettingsInputContainer {
     display: flex;
-    position: relative;
-    justify-content: space-between;
     align-items: center;
-    color: #DFF5FF;
 }
+
 .fileSettingsInput {
-    background-color:#DFF5FF;
+    background-color: #DFF5FF;
     border-radius: 10px;
     padding: 1px 0px 1px 0px;
     height: 30px;
@@ -91,26 +108,43 @@ body {
 }
 
 .fileName {
-    position: absolute;
     text-align: center;
-    right: 0;
-    background-color: #5356FF;
+    color: #DFF5FF;
     width: 170px;
+}
+
+.fileUploadButton {
+    position: relative;
+    border-radius: 10px;
+    padding: 1px 0px 1px 0px;
+    height: 40px;
+    width: 160px;
+    cursor: pointer;
+    color: #DFF5FF;
+    background-color: #378CE7;
+    border: 1px solid #378CE7;
+}
+
+.fileUploadButtonText {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: bold;
+    pointer-events: none;
 }
 
 
 input[type="file"] {
-    visibility: hidden;
-}
-input[type="file"]::file-selector-button {
-    visibility: visible;
-    color:#DFF5FF;
+    opacity: 0;
+    color: #DFF5FF;
     border-radius: 10px;
     padding: 1px 0px 1px 0px;
     height: 40px;
-    width: 150px;
+    width: 100%;
     cursor: pointer;
     background-color: #378CE7;
     border: 1px solid #378CE7;
     margin-right: 16px;
-  }
+}

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom"
 
 
-import MainPage from "./pages/MainPage"
+import EditingPage from "./pages/EditingPage"
 import LandingPage from "./pages/LandingPage"
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="MainPage" element={<MainPage />} />
+        <Route path="EditingPage" element={<EditingPage />} />
       </Routes>
     </BrowserRouter>
   )

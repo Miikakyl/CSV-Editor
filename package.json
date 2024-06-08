@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@handsontable/react": "^14.3.0",
+    "@tanstack/react-table": "^8.17.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^11.1.9",
+    "handsontable": "^14.3.0",
     "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -38,9 +41,6 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^6.23.1",
-    "babel/plugin": "@babel/plugin-proposal-private-property-in-object"
-    
-
+    "react-router-dom": "^6.23.1"
   }
 }
