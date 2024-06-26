@@ -30,11 +30,18 @@ body {
     font-size: 40px;
 }
 
-.pageContent {
-    height: 750px;
+.landingPageContent {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.editingPageContent {
+    display: grid;
+    place-items: center;
+    grid-template-columns:1030px 280px;
+    grid-template-rows: 60px 1fr;
+    
 }
 
 .textSection {
@@ -51,15 +58,32 @@ body {
     margin-bottom: 40px;
 }
 
-.appliedStepsContainer {
+.applied-steps-container {
     width: 250px;
     height: 450px;
     font-size: 18px;
-    text-align: center;
     background-color: #DFF5FF;
-    margin-left: 15px;
+    margin-left: 10px;
     border-radius: 10px;
+    overflow-y: auto;
     padding: 15px;
+
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 2;
+}
+
+.applied-step-item {
+    display: flex;
+    align-items: end;
+}
+.applied-step-item-header {
+    font-weight: normal;
+    font-size: 15px;
+    padding-right: 5px;
+}
+.applied-step-item-msg {
+    font-size: 12px;
 }
 .dataTableContainer {
     width: 1000px;
@@ -67,14 +91,35 @@ body {
     padding: 15px;
     border-radius: 10px;
     background-color: #DFF5FF;
+
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 1;
 }
 
-
+.toolbox-container {
+    
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 1320px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #DFF5FF;
+    margin-bottom: 10px;
+    user-select: none;
+    
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
 .button {
     width: 130px;
     border-radius: 10px;
     padding: 1px 0px 1px 0px;
     margin-top: 20px;
+    user-select: none;
 
     color: #DFF5FF;
     text-align: center;

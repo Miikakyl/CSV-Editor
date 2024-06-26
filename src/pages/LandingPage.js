@@ -23,7 +23,7 @@ const LandingPage = () => {
         <div className={contentLoaded ? 'pageContainer show' : 'pageContainer'}>
             <h1 className="header kavoon-font">CSV Editor</h1>
 
-            <div className="pageContent">
+            <div className="landingPageContent">
                 <div className="textSection">
                     <h2 className="landingPageText kavoon-font">Effortlessly edit CSV files by adding or removing data, while also visualizing your data with various chart options.
                     </h2>

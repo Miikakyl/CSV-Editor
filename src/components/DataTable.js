@@ -1,24 +1,47 @@
-import React, { useEffect } from 'react'
 import 'handsontable/dist/handsontable.full.min.css'
-import Handsontable from 'handsontable/base';
 import { registerAllModules } from 'handsontable/registry'
 import { HotTable } from '@handsontable/react'
+import { useEffect } from 'react'
 
 registerAllModules()
 
-const DataTable = ({ data, headers, onSelectRows, onCellModifying}) => {
+const DataTable = ({ data,onCtrlPressedChange,onSelection, onCellModifying, onDeselection, onCellClicking, onDrawSelection }) => {
 
+    const handleKeyDown = (event) => {
+        if (event.ctrlKey) {
+            onCtrlPressedChange(true)
+        }
+    }
+
+    const handleKeyUp = (event) => {
+        if (!event.ctrlKey) {
+            onCtrlPressedChange(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keyup', handleKeyUp)
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [])
    
-
     if (data) {
         return (
             <div className="dataTableContainer">
                 <HotTable
-                    beforeSetRangeStart={(coords) => console.log(coords)}
-                    beforeSetRangeEnd={(coords) => console.log(coords)}
-                    
+                    afterSelectRows={(from) => onSelection(from)}
+                    beforeOnCellMouseDown={() => onCellClicking()}
                     afterSetDataAtCell={(changes) => onCellModifying(changes)}
-                    afterRowMove={() => console.log("Row moved")}
+                    afterDeselect={() => {
+                        document.addEventListener("mousedown", (event) => {
+                            onDeselection(event)
+                        })
+                    }}
+                    afterDrawSelection={(currentRow, currentColumn, cornersOfSelection, layerLevel) => onDrawSelection(cornersOfSelection)}
                     data={data}
                     rowHeaders={true}
                     width={"100%"}

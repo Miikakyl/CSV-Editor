@@ -15,7 +15,6 @@ const DataInputs = () => {
     const [preview, setPreview] = useState(0)
 
     const handleFile = (event) => {
-        console.log(headers)
         Papa.parse(event.target.files[0], {
             header: headers,
             delimiter: delimiter,
