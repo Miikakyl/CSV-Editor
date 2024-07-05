@@ -5,15 +5,11 @@ A react project where users can import/export csv files, modify them by deleting
   - Determining delimiter, headers and preview of the import file.
   - Importing the file.
   - Displaying imported CSV.
+  - Selecting rows.
 
 
 ## TODO features
-  - Tools for modifying rows, cells and columns.
+  - Tools for modifying rows, cells and columns (Remove, Add, Connect, seperate and format).
+  - Selecting Cols.
   - Displaying applied steps in the file when removing and modifying.
-  - Filtering tools
   - exporting files
-
-## Long run features
-  - Back-end that allows user creation and saving files in the app (Stack: Express and SQLite)
-
-  
