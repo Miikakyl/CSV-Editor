@@ -1,10 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { MemoryRouter } from 'react-router-dom';
 import DataInputs from "../../components/DataInputs"
 
 describe(DataInputs, () => {
 
     it("should display correct initial values ", () => {
-        render(<DataInputs />)
+        render(
+            <MemoryRouter>
+                <DataInputs />
+            </MemoryRouter>
+        )
 
         // Initial values
         expect(screen.getByDisplayValue('true')).toBeInTheDocument()
@@ -13,7 +18,11 @@ describe(DataInputs, () => {
 
     })
     it("should change headers input value", () => {
-        render(<DataInputs />)
+        render(
+            <MemoryRouter>
+                <DataInputs />
+            </MemoryRouter>
+        )
 
         const headersInput = screen.getByTestId("headers-input")
 
@@ -25,7 +34,11 @@ describe(DataInputs, () => {
 
     })
     it("should change delimiter input value", () => {
-        render(<DataInputs />)
+        render(
+            <MemoryRouter>
+                <DataInputs />
+            </MemoryRouter>
+        )
 
         const delimiterInput = screen.getByTestId("delimiter-input")
 
@@ -38,7 +51,11 @@ describe(DataInputs, () => {
     })
 
     it("should change preview input value", () => {
-        render(<DataInputs />)
+        render(
+            <MemoryRouter>
+                <DataInputs />
+            </MemoryRouter>
+        )
 
         const previewInput = screen.getByTestId("preview-input")
 
@@ -51,7 +68,11 @@ describe(DataInputs, () => {
     })
     
     it("should upload file and then display the file name", async () => {
-        render(<DataInputs />)
+        render(
+            <MemoryRouter>
+                <DataInputs />
+            </MemoryRouter>
+        )
         const testFile = new File(['1,2,3,4,5'], 'foo.csv', {type: 'text/plain'})
         const fileInput = screen.getByTestId("file-input")
     
