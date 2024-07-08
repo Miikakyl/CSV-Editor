@@ -6,10 +6,10 @@ A react project where users can import/export csv files, modify them by deleting
   - Importing the file.
   - Displaying imported CSV.
   - Selecting rows.
+  - Selecting Cols.
 
 
 ## TODO features
   - Tools for modifying rows, cells and columns (Remove, Add, Connect, seperate and format).
-  - Selecting Cols.
   - Displaying applied steps when removing and modifying.
   - exporting files
