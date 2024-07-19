@@ -4,44 +4,40 @@ import { useLocation } from "react-router-dom"
 import DataTable from "../components/DataTable"
 import AppliedSteps from "../components/AppliedSteps"
 import Toolbox from "../components/Toolbox"
+import Logo from "../components/Logo"
 
 
 const EditingPage = () => {
     const location = useLocation()
-    const passedData = location.state.data
 
     const [contentLoaded, setContentLoaded] = useState(false)
     const [data, setData] = useState(null)
     const [appliedStep, setAppliedStep] = useState("")
     const [selectedRows, setSelectedRows] = useState([])
+    const [selectedCols, setSelectedCols] = useState([])
     const [ctrlPressed, setCtrlPressed] = useState(false)
     const editingPageRef = useRef()
 
 
 
     useEffect(() => {
-        setData(passedData)
         const timer = setTimeout(() => {
-            setContentLoaded(true)
+            if (location?.state && location.state.data) {
+                setData(location.state.data)
+                setContentLoaded(true)
+            }
         }, 400)
 
         return () => clearTimeout(timer)
-    }, [passedData])
+    }, [location])
 
-    // Takes an array of numbers and returns all numbers between min and max values
-    function numbersBetween(arr) {
-        let highNum = Math.max(...arr)
-        let lowNum = Math.min(...arr)
-        let arrayBetween = []
 
-        for (let i = lowNum; i <= highNum; i++) {
-            arrayBetween.push(i)
-        }
-        return arrayBetween
+    const createAppliedStepObj = () => {
 
     }
 
     const handleCellModifying = (changes) => {
+        console.log(changes)
         const row = changes[0][0]
         const column = changes[0][1]
         const oldValue = changes[0][2]
@@ -58,64 +54,190 @@ const EditingPage = () => {
                 column: column,
                 oldValue: oldValue,
                 newValue: newValue,
-                operation: "Cell modification"
+                operation: "Cell modified"
             }
             setAppliedStep(appliedStepObj)
         }
     }
+
     const handleCellClicking = () => {
         setSelectedRows([])
+        setSelectedCols([])
     }
 
-    const handleSelection = (rowPosition) => {
-        console.log(rowPosition)
+    const handleColSelection = (colPosition) => {
+        setSelectedRows([])
         if (ctrlPressed) {
-            console.log("ctrl selection")
+            const alreadyExists = selectedCols.some(item => item.col === colPosition.col)
+            if (!alreadyExists) {
+                setSelectedCols([...selectedCols, colPosition])
+            }
+        }
+        else {
+            setSelectedCols([colPosition])
+        }
+        setCtrlPressed(false)
+    }
+
+    const handleRowSelection = (rowPosition) => {
+        setSelectedCols([])
+        if (ctrlPressed) {
             setSelectedRows([...selectedRows, rowPosition])
         }
         else {
-            console.log("singe selection")
             setSelectedRows([rowPosition])
         }
         setCtrlPressed(false)
     }
-    const handleDrawSelection = (rowSelection) => {
-        const drawSelectionRange = numbersBetween([rowSelection[0],rowSelection[2]])
-        console.log(drawSelectionRange)
-    }
 
     const handleDeselection = (element) => {
-        // If user clicks out of the editingpage, the selectedRows will be emptied
-        if ((editingPageRef.current && !editingPageRef.current.contains(element.target))) {
+        console.log("deselected")
+        // If user clicks out of the editingpage, selectedRows or selectedCols will be emptied
+        if ((editingPageRef.current && editingPageRef.current.contains(element.target) === false)) {
             setSelectedRows([])
+            setSelectedCols([])
         }
     }
+    const handleConnectingCols = (delimiter) => {
+
+        console.log("handleConnectingCols fired")
+        if (selectedCols.length >= 2) {
+            const colsToConnect = selectedCols.map((obj) => obj.col)
+
+            const fixedData = data.map(row => {
+                const concatenatedValues = colsToConnect.map(index => row[index])
+                const isAllEmpty = concatenatedValues.every(value => value === null || value === undefined || value === "")
+                const concatenatedValue = isAllEmpty ? concatenatedValues.join("") : concatenatedValues.join(delimiter)
+
+                // Create a new row with the connected value and nulls
+                return row.map((value, index) => {
+                    if (index === colsToConnect[0]) {
+                        // Replace the first column to connect with the concatenated value
+                        return concatenatedValue
+
+                    } else if (colsToConnect.includes(index)) {
+                        // Replace other connected columns with null
+                        return null
+                    } else {
+                        // Keep the original value for all other columns
+                        return value
+                    }
+                }).filter((value, index) => index === colsToConnect[0] || !colsToConnect.includes(index)) //Filtering out other connected columns
+            })
+
+            console.log(fixedData)
+            setData(fixedData)
+            setSelectedCols([])
+        }
+    }
+
+    const handleFormattingCols = (formatObj) => {
+        const formatType = formatObj.formatType
+        const value = formatObj.value
+
+        if (selectedCols) {
+            const colsToFormat = selectedCols.map((obj) => obj.col) // Col indexes
+
+            const fixedData = data.map((row, i) => {
+                const newRow = [...row]
+
+                colsToFormat.forEach(index => {
+
+                    if (newRow[index]) {
+                        switch (formatType) {
+                            case "prefix":
+                                newRow[index] = value.concat(newRow[index])
+                                break
+                            case "suffix":
+                                newRow[index] = newRow[index].concat(value)
+                                break
+                            case "uppercase":
+                                newRow[index] = newRow[index].toUpperCase()
+                                break
+                            case "lowercase":
+                                newRow[index] = newRow[index].toLowerCase()
+                                break
+                            default:
+                                break
+                        }
+                    }
+                })
+                return newRow
+            })
+            setData(fixedData)
+            setSelectedCols([])
+        }
+    }
+
+    const splitAt = (index, xs) => [xs.slice(0, index), xs.slice(index)]
+
+    const handleSplittingCol = (position) => {
+        const colsToSplit = selectedCols.map((obj) => obj.col)
+
+        if (selectedCols.length === 1) {
+            const fixedData = data.map(row => {
+                const newRow = [...row]
+
+                let splittedValue
+
+                colsToSplit.forEach(index => {
+                    splittedValue = newRow[index] ? splitAt(position, newRow[index]) : null
+                })
+
+                newRow[colsToSplit[0]] = splittedValue ? splittedValue[0] : splittedValue
+                newRow.splice(colsToSplit[0] + 1, 0, splittedValue ? splittedValue[1] : splittedValue)
+
+                return newRow
+            })
+            setData(fixedData)
+            setSelectedCols([])
+        }
+    }
+
     const handleRemove = () => {
-        const indexesToRemove = selectedRows.map((obj) => obj.row)
-        setData(data.filter((_, index) => !indexesToRemove.includes(index)))
-        setSelectedRows([])
+        if (selectedRows.length !== 0) {
+            const indexesToRemove = selectedRows.map((obj) => obj.row)
+            setData(data.filter((_, index) => indexesToRemove.includes(index) === false))
+            setSelectedRows([])
+        }
+        if (selectedCols.length !== 0) {
+            const colsToRemove = selectedCols.map((obj) => obj.col)
+            const fixedData = data.map(row =>
+                row.filter((_, index) => colsToRemove.includes(index) === false)
+            )
+            setData(fixedData)
+            setSelectedCols([])
+        }
     }
 
     return (
-        <div className={contentLoaded ? 'pageContainer show' : 'pageContainer'}>
-            <h1 className="header kavoon-font">CSV Editor</h1>
+        <div className={contentLoaded ? 'page-container show' : 'page-container'}>
+            <Logo />
             <div
+                data-testid={"editingPage"}
                 ref={editingPageRef}
-                className="editingPageContent">
-                <Toolbox
-                    isSelected={selectedRows}
-                    onRemove={handleRemove}
-                />
-                <DataTable
-                    data={data}
-                    onCtrlPressedChange={setCtrlPressed}
-                    onSelection={handleSelection}
-                    onCellModifying={handleCellModifying}
-                    onDeselection={handleDeselection}
-                    onCellClicking={handleCellClicking}
-                    onDrawSelection={handleDrawSelection}
-                />
-                <AppliedSteps newStep={appliedStep} />
+                className="container-fluid my-3 px-5">
+                <div className="row">
+                    <Toolbox
+                        selected={selectedRows ? selectedRows : selectedCols}
+                        onRemove={handleRemove}
+                        onConnectingCols={handleConnectingCols}
+                        onFormat={handleFormattingCols}
+                        onSplittingCol={handleSplittingCol}
+                    />
+                </div>
+                <div className="row d-flex justify-content-between g-2">
+                    <DataTable
+                        data={data}
+                        onCtrlPressedChange={setCtrlPressed}
+                        onRowSelection={handleRowSelection}
+                        onColSelection={handleColSelection}
+                        onCellModifying={handleCellModifying}
+                        onDeselection={handleDeselection}
+                        onCellClicking={handleCellClicking}
+                    />
+                    <AppliedSteps newStep={appliedStep} />
+                </div>
             </div>
         </div>
     )

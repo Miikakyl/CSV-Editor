@@ -21,7 +21,7 @@ const DataInputs = () => {
             preview: preview,
             complete: (result) => {
                 let csvData = result.data
-
+                console.log(csvData)
                 if(headers) {
                     csvData = convertObjTOArray(result.data)
                 }
@@ -74,43 +74,43 @@ const DataInputs = () => {
 
 
     return (
-        <div className="fileSettingsContainer">
-            <div className="fileSettingsInputContainer">
-                <p className="fileSettingsInputHeader">Headers</p>
+        <div className="file-settings-container">
+            <div className="my-3">
+                <p className="file-settings-input-header mb-2">Headers</p>
                 <select
                     data-testid="headers-input"
-                    className="fileSettingsInput"
+                    className="file-settings-input"
                     value={headers}
                     onChange={(e) => setHeaders(e.target.value === "true")}>
                     <option value="true">true</option>
                     <option value="false">false</option>
                 </select>
             </div>
-            <div className="fileSettingsInputContainer">
-                <p className="fileSettingsInputHeader">Delimiter</p>
+            <div className="my-3">
+                <p className="file-settings-input-header mb-2">Delimiter</p>
                 <input
                     data-testid="delimiter-input"
                     value={delimiter}
                     onChange={(e) => setDelimiter(e.target.value)}
-                    className="fileSettingsInput"
+                    className="file-settings-input"
                     type="text"
                 />
             </div>
-            <div className="fileSettingsInputContainer">
-                <p className="fileSettingsInputHeader">Preview</p>
+            <div className="my-3">
+                <p className="file-settings-input-header mb-2">Preview</p>
                 <input
                     data-testid="preview-input"
                     value={preview}
                     onChange={(e) => setPreview(e.target.value)}
-                    className="fileSettingsInput"
+                    className="file-settings-input"
                     type="number"
                     min="0"
                     max="10000"
                 />
             </div>
-            <div className="fileSettingsInputContainer">
-                <p className="fileSettingsInputHeader">CSV-file</p>
-                <div className="fileUploadButton">
+            <div className="d-flex align-items-center my-3">
+                <div className="file-upload-button">
+                    <p className="file-upload-button-text">Import</p>
                     <input
                         data-testid="file-input"
                         onChange={handleFile}
@@ -118,18 +118,19 @@ const DataInputs = () => {
                         ref={fileInput}
                         accept=".csv"
                     />
-                    <p className="fileUploadButtonText">Import</p>
                 </div>
                 <p
                     data-testid="file-name"
-                    className="fileName">
+                    className="file-name m-0">
                     {fileName}
                 </p>
             </div>
             {data &&
                 <Button
-                    color="#14A44D"
+                    bgColor="#009963"
+                    color="white"
                     width="100%"
+                    height="45px"
                     cbFunction={() => navigate("EditingPage", { state: { data: data, headers: headers } })}
                     text="Start Editing"
                 />

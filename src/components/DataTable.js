@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 registerAllModules()
 
-const DataTable = ({ data,onCtrlPressedChange,onSelection, onCellModifying, onDeselection, onCellClicking, onDrawSelection }) => {
+const DataTable = ({ data, onCtrlPressedChange, onRowSelection, onColSelection, onCellModifying, onDeselection, onCellClicking }) => {
 
     const handleKeyDown = (event) => {
         if (event.ctrlKey) {
@@ -31,9 +31,10 @@ const DataTable = ({ data,onCtrlPressedChange,onSelection, onCellModifying, onDe
    
     if (data) {
         return (
-            <div className="dataTableContainer">
+           <div className="col-10 data-table-container">
                 <HotTable
-                    afterSelectRows={(from) => onSelection(from)}
+                    afterSelectRows={(from) => onRowSelection(from)}
+                    afterSelectColumns={(from) => onColSelection(from)}
                     beforeOnCellMouseDown={() => onCellClicking()}
                     afterSetDataAtCell={(changes) => onCellModifying(changes)}
                     afterDeselect={() => {
@@ -41,16 +42,16 @@ const DataTable = ({ data,onCtrlPressedChange,onSelection, onCellModifying, onDe
                             onDeselection(event)
                         })
                     }}
-                    afterDrawSelection={(currentRow, currentColumn, cornersOfSelection, layerLevel) => onDrawSelection(cornersOfSelection)}
                     data={data}
                     rowHeaders={true}
+                    colHeaders={true}
                     width={"100%"}
                     height="100%"
                     minRows={100}
-                    minCols={20}
+                    minCols={30}
                     licenseKey="non-commercial-and-evaluation"
                 />
-            </div>
+           </div>
         )
     }
 }
