@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import Papa from "papaparse"
 import { useLocation } from "react-router-dom"
 
 import DataTable from "../components/DataTable"
@@ -31,6 +32,35 @@ const EditingPage = () => {
         return () => clearTimeout(timer)
     }, [location])
 
+
+
+    const convertToJson = () => {
+        if (data.length > 0) {
+
+            const dataWithOutNulls = data.map(row => {
+                const filteredRow = row.filter(cell => cell !== null)
+                return filteredRow
+            })
+
+            const csv = Papa.unparse(dataWithOutNulls, {
+            })
+
+            let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+
+            const link = document.createElement('a')
+            const url = URL.createObjectURL(blob)
+            link.href = url
+
+            link.download = 'data.csv'
+
+            document.body.appendChild(link)
+
+            link.click()
+
+            document.body.removeChild(link)
+            URL.revokeObjectURL(url)
+        }
+    }
 
     const createAppliedStepObj = () => {
 
@@ -210,6 +240,39 @@ const EditingPage = () => {
         }
     }
 
+    const handleAdd = () => {
+        if (selectedRows.length !== 0) {
+
+            const rowIndexes = selectedRows.map((obj) => obj.row)
+            const fixedData = data
+            
+            rowIndexes.forEach((index) => {
+                const emptyArr = new Array(fixedData.length).fill(null)
+                fixedData.splice(index,0,emptyArr)
+            })
+
+            setData(fixedData)
+            setSelectedRows([])
+        }
+
+        if (selectedCols.length !== 0) {
+            const colIndexes = selectedCols.map((obj) => obj.col)
+            const fixedData = data.map(row => {
+                const newRow = [...row]
+
+                newRow.forEach((value,index) => {
+                    if(colIndexes.includes(index)) {
+                        newRow.splice(index,0,null)
+                    }
+                })
+
+                return newRow
+            })
+            setData(fixedData)
+            setSelectedCols([])
+        }
+    }
+
     return (
         <div className={contentLoaded ? 'page-container show' : 'page-container'}>
             <Logo />
@@ -224,6 +287,8 @@ const EditingPage = () => {
                         onConnectingCols={handleConnectingCols}
                         onFormat={handleFormattingCols}
                         onSplittingCol={handleSplittingCol}
+                        onConvertingToJson={convertToJson}
+                        onAdd={handleAdd}
                     />
                 </div>
                 <div className="row d-flex justify-content-between g-2">

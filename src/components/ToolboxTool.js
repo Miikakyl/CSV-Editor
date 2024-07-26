@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import Button from "./Button"
 
-const ToolboxTool = ({ text, operationFunction }) => {
+const ToolboxTool = ({ text, operationFunction, width, fontSize }) => {
     const [value, setValue] = useState("")
     const [formatValue, setFormatValue] = useState("")
     const [dropdown, setDropdown] = useState(false)
@@ -12,7 +12,7 @@ const ToolboxTool = ({ text, operationFunction }) => {
     }
 
     return (
-        <div className="toolbox-tool-container">
+        <div className="toolbox-tool-container" style={{width: width, fontSize: fontSize}}>
             <Button text={text} cbFunction={toggleDropdown} />
             {dropdown && (text === "Connect columns" || text === "Split column") &&
                 <div className="toolbox-items position-absolute d-flex justify-content-center">
@@ -135,7 +135,6 @@ const ToolboxTool = ({ text, operationFunction }) => {
                                 />
                                 <label>Prefix</label>
                             </div>
-
                         </div>
                     </div>
                 </div>

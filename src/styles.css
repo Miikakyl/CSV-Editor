@@ -140,7 +140,7 @@ td[role="gridcell"] {
 
 .button {
     border-radius: 25px;
-    padding: 1px 10px 1px 10px;
+    padding: 5px 10px 5px 10px;
     height: 45px;
     user-select: none;
     font-weight: 500;
